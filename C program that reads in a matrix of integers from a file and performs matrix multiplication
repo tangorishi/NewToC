@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+int main()
+{
+    FILE *fp;
+    int a[MAX_SIZE][MAX_SIZE], b[MAX_SIZE][MAX_SIZE];
+    int m, n, p, q, i, j, k;
+
+    fp = fopen("matrix.txt", "r");
+    if (fp == NULL)
+    {
+        printf("Error opening file\n");
+        return 1;
+    }
+
+    fscanf(fp, "%d%d", &m, &n);
+    for (i = 0; i < m; i++)
+        for (j = 0; j < n; j++)
+            fscanf(fp, "%d", &a[i][j]);
+
+    fscanf(fp, "%d%d", &p, &q);
+    for (i = 0; i < p; i++)
+        for (j = 0; j < q; j++)
+            fscanf(fp, "%d", &b[i][j]);
+
+    fclose(fp);
+
+    if (n != p)
+    {
+        printf("Invalid matrices\n");
+        return 1;
+    }
+
+    int c[MAX_SIZE][MAX_SIZE];
+    for (i = 0; i < m; i++)
+        for (j = 0; j < q; j++)
+        {
+            c[i][j] = 0;
+            for (k = 0; k < n; k++)
+                c[i][j] += a[i][k] * b[k][j];
+        }
+
+    printf("Resulting matrix:\n");
+    for (i = 0; i < m; i++)
+    {
+        for (j = 0; j < q; j++)
+            printf("%d ", c[i][j]);
+        printf("\n");
+    }
+
+    return 0;
+}
