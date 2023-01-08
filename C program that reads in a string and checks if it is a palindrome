@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <ctype.h>
+
+int main()
+{
+    char str[100];
+    int i, j, len;
+
+    printf("Enter a string: ");
+    gets(str);
+
+    // Remove whitespace and punctuation from the string
+    for (i = 0, j = 0; str[i] != '\0'; i++)
+    {
+        if (isalpha(str[i]))
+        {
+            str[j] = tolower(str[i]);
+            j++;
+        }
+    }
+    str[j] = '\0';
+
+    len = j;
+
+    // Check if the string is a palindrome
+    for (i = 0, j = len - 1; i < len / 2; i++, j--)
+    {
+        if (str[i] != str[j])
+        {
+            printf("%s is not a palindrome\n", str);
+            return 0;
+        }
+    }
+
+    printf("%s is a palindrome\n", str);
+
+    return 0;
+}
