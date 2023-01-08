@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+char *concat_strings(const char *s1, const char *s2)
+{
+    int len1 = 0, len2 = 0;
+    const char *p;
+
+    // Determine the length of the first string
+    for (p = s1; *p != '\0'; p++)
+        len1++;
+
+    // Determine the length of the second string
+    for (p = s2; *p != '\0'; p++)
+        len2++;
+
+    // Allocate memory for the new string
+    char *new_string = malloc((len1 + len2 + 1) * sizeof(char));
+    if (new_string == NULL)
+        return NULL;
+
+    // Copy the first string into the new string
+    char *p_new = new_string;
+    for (p = s1; *p != '\0'; p++)
+        *p_new++ = *p;
+
+    // Append the second string to the new string
+    for (p = s2; *p != '\0'; p++)
+        *p_new++ = *p;
+
+    // Null-terminate the new string
+    *p_new = '\0';
+
+    return new_string;
+}
+
+int main()
+{
+    char *s1 = "Hello";
+    char *s2 = " World!";
+    char *s3 = concat_strings(s1, s2);
+    printf("%s\n", s3);
+    free(s3);
+
+    return 0;
+}
