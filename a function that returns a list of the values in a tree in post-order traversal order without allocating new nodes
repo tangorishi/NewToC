@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct TreeNode {
+  int val;
+  struct TreeNode *left;
+  struct TreeNode *right;
+};
+
+void postOrderTraversal(struct TreeNode *root, int *result, int *index) {
+  if (root == NULL) {
+    return;
+  }
+
+  postOrderTraversal(root->left, result, index);
+  postOrderTraversal(root->right, result, index);
+  result[(*index)++] = root->val;
+}
+
+int *postorderTraversal(struct TreeNode *root, int *returnSize) {
+  if (root == NULL) {
+    *returnSize = 0;
+    return NULL;
+  }
+
+  int *result = malloc(sizeof(int) * 1000);
+  int index = 0;
+  postOrderTraversal(root, result, &index);
+  *returnSize = index;
+  return result;
+}
