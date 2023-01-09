@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define HASH_SIZE 1000
+
+struct ListNode {
+  int val;
+  struct ListNode *next;
+};
+
+struct HashTable {
+  struct ListNode *table[HASH_SIZE];
+};
+
+struct HashTable *createHashTable() {
+  struct HashTable *hashTable = malloc(sizeof(struct HashTable));
+  for (int i = 0; i < HASH_SIZE; i++) {
+    hashTable->table[i] = NULL;
+  }
+  return hashTable;
+}
+
+void insert(struct HashTable *hashTable, int val) {
+  int index = val % HASH_SIZE;
+  struct ListNode *node = malloc(sizeof(struct ListNode));
+  node->val = val;
+  node->next = hashTable->table[index];
+  hashTable->table[index] = node;
+}
+
+bool find(struct HashTable *hashTable, int val) {
+  int index = val % HASH_SIZE;
+  struct ListNode *node = hashTable->table[index];
+  while (node != NULL) {
+    if (node->val == val) {
+      return true;
+    }
+    node = node->next;
+  }
+  return false;
+}
+
+int main(int argc, char *argv[]) {
+  if (argc < 2) {
+    printf("Usage: %s filename\n", argv[0]);
+    return 1;
+  }
+
+  char *filename = argv[1];
+  FILE *file = fopen(filename, "r");
+  if (file == NULL) {
+    printf("Error opening file\n");
+    return 1;
+  }
+
+  struct HashTable *hashTable = createHashTable();
+
+  int val;
+  while (fscanf(file, "%d", &val) == 1) {
+    if (find(hashTable, val)) {
+      printf("Duplicate element: %d\n", val);
+      break;
+    }
+    insert(hashTable, val);
+  }
+
+  fclose(file);
+  return 0;
+}
