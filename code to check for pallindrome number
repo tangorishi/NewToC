@@ -1,0 +1,28 @@
+#include<stdio.h>
+int main()
+{
+    int num,rem,temp;
+    int result =0;
+
+    printf("enter the number you want to check for if it's a pallindrome or not\n");
+    scanf("%d" ,&num);
+
+    temp = num;
+
+    while(num!=0){
+
+         rem = num%10;
+         result = (result*10) + rem;
+         num = num/10;
+
+    }
+    if(temp == result )
+
+        printf("%d is a pallindrome number" ,temp);
+
+    else
+    printf("%d is not a pallindrome number" ,temp);
+
+
+return 0;
+}
