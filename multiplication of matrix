@@ -1,0 +1,26 @@
+void matrix_multiplication(int a[][3], int b[][3], int result[][3], int a_rows, int a_cols, int b_cols) {
+    for (int i = 0; i < a_rows; i++) {
+        for (int j = 0; j < b_cols; j++) {
+            int dot_product = 0;
+            for (int k = 0; k < a_cols; k++) {
+                dot_product += a[i][k] * b[k][j];
+            }
+            result[i][j] = dot_product;
+        }
+    }
+}
+
+int main() {
+    int a[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    int b[3][3] = {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}};
+    int result[3][3] = {0};
+    matrix_multiplication(a, b, result, 3, 3, 3);
+    printf("Multiplication of matrices A and B: \n");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
