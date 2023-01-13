@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+
+void nonMatchingChars(char* str, char* match) {
+    int len = strlen(str);
+    for (int i = 0; i < len; i++) {
+        if (strchr(match, str[i]) == NULL) {
+            printf("%c ", str[i]);
+        }
+    }
+}
+
+int main() {
+    char str[100];
+    char match[100];
+
+    printf("Enter the first string: ");
+    scanf("%s", str);
+
+    printf("Enter the matching string: ");
+    scanf("%s", match);
+
+    printf("Non-matching characters in the first string: ");
+    nonMatchingChars(str, match);
+    printf("\n");
+    return 0;
+}
