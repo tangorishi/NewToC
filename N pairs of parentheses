@@ -1,0 +1,24 @@
+void generateParenthesis(int n, int left, int right, char* current, int index, char*** result, int* returnSize) {
+    if (left == n && right == n) {
+        result[*returnSize] = (char*) malloc((2 * n + 1) * sizeof(char));
+        strcpy(result[*returnSize], current);
+        (*returnSize)++;
+        return;
+    }
+    if (left < n) {
+        current[index] = '(';
+        generateParenthesis(n, left + 1, right, current, index + 1, result, returnSize);
+    }
+    if (right < left) {
+        current[index] = ')';
+        generateParenthesis(n, left, right + 1, current, index + 1, result, returnSize);
+    }
+}
+
+char** generateParenthesis(int n, int* returnSize) {
+    char*** result = (char***) malloc(sizeof(char**));
+    char* current = (char*) malloc((2 * n + 1) * sizeof(char));
+    *returnSize = 0;
+    generateParenthesis(n, 0, 0, current, 0, result, returnSize);
+    return *result;
+}
