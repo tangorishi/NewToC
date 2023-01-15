@@ -1,0 +1,56 @@
+bool searchMatrix(int** matrix, int matrixSize, int* matrixColSize, int target){
+
+
+	int col = *matrixColSize;
+	int row = matrixSize;
+
+	if(row*col == 1){
+		if(matrix[0][0] == target){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
+	for(int i = 0; i < row; i++){
+		if(matrix[i][0] <= target && target <= matrix[i][col-1]){
+
+			int left = 0;
+			int right = col-1;
+
+			if((col == 1 ) && (matrix[i][col-1] == target)){
+				return true;
+			}
+
+			if((col == 2) &&  (matrix[i][0] == target || matrix[i][1] == target )){
+				return true;
+			}
+
+			while(left < right){
+				int mid = left + (right -left)/2;
+
+				if(matrix[i][mid] == target){
+					return true;
+				}
+
+				if(matrix[i][mid] > target ){
+					right = mid;
+				}else{
+					left = mid+1;
+				}    
+
+			}
+
+			if(left == right){
+			   if(matrix[i][left] == target){
+					return true;
+				} 
+			}
+
+		}
+	}
+
+	return false;
+
+}
