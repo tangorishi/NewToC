@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void solve(vector<int> &nums, vector<int> &temp, set<vector<int>> &ans, int i) {
+        if(i == nums.size()) {
+            if(temp.size() >= 2)
+            ans.insert(temp);
+            return;
+        }
+        if(temp.empty() || temp.back() <= nums[i])
+            temp.push_back(nums[i]);
+        solve(nums, temp, ans, i + 1);
+        if(temp.size() && temp.back() == nums[i])
+            temp.pop_back();
+        solve(nums, temp, ans, i + 1);
+    }
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        set<vector<int>> Set;
+        vector<vector<int>> ans;
+        vector<int> temp;
+        solve(nums, temp, Set, 0);
+        for(auto it: Set) {
+            ans.push_back(it);
+        }
+        return ans;
+    }
+};
