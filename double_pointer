@@ -1,0 +1,11 @@
+#include<stdio.h>
+int main()
+{
+    int a= 20,b=90;
+    int*p =&a;
+    int*q= &b;
+    int**q1 = &p; //double pointers
+    printf("value of a is %d\n",*p);
+    printf("value of b is %d\n",*q);
+    printf("value of a is %d\n",**q1);
+}
