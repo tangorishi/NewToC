@@ -1,0 +1,85 @@
+#define RESULT_SIZE 10000
+
+void sort(int* nums, int size) {
+    int tmp;
+    
+    for (int i = 1; i < size; i++) {
+        for (int j = i; j > 0; j--) {
+            if (nums[j] < nums[j - 1]) {
+                tmp = nums[j];
+                nums[j] = nums[j - 1];
+                nums[j - 1] = tmp;
+            }
+        }
+    }
+}
+
+void backtrace(int** result, int* result_ind, int* curr_result, int curr_index, int set_size, int* nums, int numsSize, int start, int* returnColumnSizes) {
+    
+    if (set_size == 0) {
+
+        result[*result_ind] = malloc(sizeof(int) * curr_index);
+        memcpy(result[*result_ind], curr_result, curr_index * sizeof(int));
+        returnColumnSizes[*result_ind] = curr_index;
+        *result_ind = *result_ind + 1;
+        
+        return;
+    }
+    
+    for (int i = start; i < numsSize; i++) {
+        
+        //if (i == 0 || i != start &&  (nums[i - 1] != nums[i])) {
+        // think conditions again
+        
+        if (i == start || i != start &&  (nums[i - 1] != nums[i])) {
+            curr_result[curr_index] = nums[i];
+            
+            backtrace(result, result_ind, curr_result, curr_index + 1, set_size - 1, nums, numsSize, i + 1, returnColumnSizes);
+        }
+    }
+}
+
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+int** subsetsWithDup(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
+
+    int** result;
+    int* curr_result;
+    int result_index;
+    
+    
+    
+    (*returnColumnSizes) = malloc(RESULT_SIZE * sizeof(int));
+    curr_result = malloc(numsSize * sizeof(int));
+    result = malloc(RESULT_SIZE * sizeof(int*));
+    *returnSize = 0;
+    result_index = 0;
+    
+    if (numsSize == 0) {
+        *returnSize = 1;
+        (*returnColumnSizes)[0] = 0;
+        return result;
+    }
+    
+    sort(nums, numsSize);
+    
+    for (int curr_size = 1; curr_size <= numsSize; curr_size++) {
+
+                //printf("%d\n", curr_size);
+        backtrace(result, &result_index, curr_result, 0, curr_size, nums, numsSize, 0, *returnColumnSizes);
+
+    }
+    
+    (*returnColumnSizes)[result_index] = 0;
+    *returnSize = result_index+ 1;
+
+    return result;
+}
+
+
+
+
+
