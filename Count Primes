@@ -1,0 +1,51 @@
+
+
+int countPrimes(int n){
+        int i;
+
+        bool *arr;
+
+        int prime = 0;
+
+        long long temp;
+
+        if(n  <= 2 )
+
+                return 0;
+
+        arr= malloc(sizeof(bool)*n);
+
+        while(i < n){
+
+                arr[i] = 0;
+
+                i++;
+
+        }
+
+        i = 2;
+
+        for(i = 2; i < n; i++)
+
+{
+
+                if(arr[i])
+
+                        continue;
+
+                temp = (long)i*(long)i;
+
+                prime++;
+
+                while(temp < n){
+
+                        arr[temp] = 1;
+
+                        temp  += i;
+
+                }
+
+        }
+
+        return prime;
+}
