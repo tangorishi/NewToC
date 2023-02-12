@@ -1,0 +1,30 @@
+
+
+int* plusOne(int* digits, int digitsSize, int* returnSize){
+    //Increase size by one iff first element is 9
+    int *array = (int*) malloc(digitsSize * sizeof(int));
+   
+    
+    for(int i = digitsSize - 1; i >= 0; i--){
+       if(digits[i] < 9){
+           array[i] = digits[i] + 1;
+           //Fill rest of array
+           for(int j = i-1; j >= 0; j--){
+               array[j] = digits[j];
+           }
+           *returnSize = digitsSize;
+           return array;
+       }else{
+           array[i] = 0;
+       }
+    }
+    //If made it here, need to increase size
+    int *newArray = (int*) malloc((digitsSize+1) * sizeof(int));
+    newArray[0] = 1;
+    //Fill rest of array
+    for(int k = 1; k <= digitsSize; k++){
+        newArray[k] = 0;
+    }
+    *returnSize = digitsSize+1;
+    return newArray;
+}
