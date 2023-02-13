@@ -1,0 +1,38 @@
+
+char** summaryRanges(int* nums, int numsSize, int* returnSize) {
+    char **ranges = malloc(sizeof(char *) * 8);
+    char **originalRanges = ranges;
+    int count = 0;
+    int size = 8;
+    
+    for (int i = 0; i < numsSize; i++) {
+        char *range = calloc(24, sizeof(char));
+        int startNum = nums[i];
+        int lastNum = nums[i];
+        for (int j = i + 1; j < numsSize; j++) {
+            if (nums[j] != lastNum + 1) {
+                break;
+            }
+            else {
+                lastNum++;
+            }
+            i++;
+        }
+        if (startNum != lastNum) {
+            sprintf(range, "%d->%d", startNum, lastNum);
+        }
+        else {
+            sprintf(range, "%d", startNum);
+        }
+        ranges[count] = range;
+        count++;
+        
+        if (count >= size) {
+            size *= 2;
+            ranges = realloc(ranges, sizeof(char *) * size);
+        }
+    }
+    
+    *returnSize = count;
+    return originalRanges; 
+}
