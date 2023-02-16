@@ -1,0 +1,20 @@
+int cmpfunc (const void * a, const void * b);
+
+bool containsDuplicate(int* nums, int numsSize) {
+
+	qsort(nums, numsSize, sizeof(int), cmpfunc);
+	
+    register bool res = false;
+	register int i;
+    for(i = 0; i < numsSize - 1; i++) {
+		if(nums[i] == nums[i+1]) {
+			res = true;
+			break;
+		}
+	}
+	return res;
+}
+
+int cmpfunc (const void * a, const void * b) {
+   return ( *(int*)a - *(int*)b );
+}
