@@ -1,0 +1,15 @@
+void inverse(struct TreeNode* root){
+    struct TreeNode *tmp;
+    if(root!=NULL){
+        tmp=root->left;
+        root->left=root->right;
+        root->right=tmp;
+        inverse(root->left);
+        inverse(root->right);
+    }
+}
+
+struct TreeNode* invertTree(struct TreeNode* root){
+    inverse(root);
+    return root;
+}
